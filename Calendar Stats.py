@@ -1,6 +1,7 @@
 from customtkinter import *
 import calendar
 import datetime
+# from time import strftime
 
 
 class calender_win:
@@ -31,8 +32,29 @@ class calender_win:
         
         self.show_calendar(self.year, self.month)
         
+        self.time_frame = CTkFrame(self.root, border_width=0, corner_radius=0, fg_color='#242424')
+        self.time_frame.place(relx=0.48, rely=0.07, relwidth=0.38, relheight=0.2)
+        
+        self.timelabel = CTkLabel(self.time_frame, font=('calibri',60,'bold'))
+        self.timelabel.place(relx=0.01,rely=0.02, )
+        self.am_pm_label = CTkLabel(self.time_frame, font=('calibri',120,'bold'))
+        self.am_pm_label.place(relx=0.625,rely=0.01, )
+        self.daylabel = CTkLabel(self.time_frame, font=('calibri', 30, 'bold'))
+        self.daylabel.place(relx=0.39, rely=0.45, )
+        
+        self.update_daytime()
         
 
+    def update_daytime(self):
+        # current_time = strftime('%H:%M:%S %p')
+        current_time = datetime.datetime.now().strftime('%H:%M:%S.%f')[:-3]  ## Truncating microsecond to milisecond
+        self.timelabel.configure(text=current_time)
+        am_pm = datetime.datetime.now().strftime('%p')
+        self.am_pm_label.configure(text=am_pm)
+        current_day = datetime.datetime.now().strftime('%A')
+        self.daylabel.configure(text=current_day)
+        self.timelabel.after(1, self.update_daytime)  # Update every 1000 milliseconds (1 second)
+    
     def show_calendar(self, year, month):
         # Get the current year and month
         # year = datetime.datetime.now().year
