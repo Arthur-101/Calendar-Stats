@@ -1,4 +1,4 @@
 # Calendar-Stats
 
 ### This is just a fun project
-### about some calendar
+### about some calendar stats
