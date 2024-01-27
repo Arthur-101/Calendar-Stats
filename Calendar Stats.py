@@ -48,27 +48,8 @@ class calender_win:
         self.progress_frame = CTkFrame(self.root, border_width=1, corner_radius=0, fg_color='#242424')
         self.progress_frame.place(relx=0.2, rely=0.6, relwidth=0.6, relheight=0.2)
         
+        self.day_in_year_progress()
         
-        # Create a progress variable
-        self.progress_var = tk.DoubleVar()
-        self.progress_var.set(0)
-        # Create a style for the progress bar
-        self.style = ttk.Style()
-       
-        # Create a Progressbar widget
-        self.progress_bar = ttk.Progressbar(self.progress_frame, orient="horizontal", variable=self.progress_var, length=300, mode="determinate",
-            maximum=100,) # style='TProgressbar')
-
-        self.progress_bar.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
-        self.progress_bar.start()
-        
-        self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('calibri', 30, 'bold'), bg_color='#e6e6e6', text_color='black')
-        self.progress_num.place(relx=0.8, rely=0.15)
-        
-        self.progress_name = CTkLabel(self.progress_frame, text="Year", font=('calibri', 30, 'bold'))
-        self.progress_name.place(relx=0.46, rely=0.6)
-        
-        self.update_day_in_year_progress(self.progress_bar, self.progress_var, self.progress_num)
         
 
     def update_daytime(self):
@@ -81,6 +62,9 @@ class calender_win:
         self.timelabel.after(1, self.update_daytime)  # Update every 1 milliseconds
     
     def show_calendar(self, year, month):
+        # Get the current year and month
+        # year = datetime.now().year
+        # month = datetime.now().month
         today = datetime.now().day
 
         # Create a calendar for the specified year and month
@@ -149,6 +133,36 @@ class calender_win:
 
         self.next_button = CTkButton(self.calendar_frame, text=">>>", command=self.show_next_month)
         self.next_button.place(relx=0.8, rely=0.05, relwidth=0.15, relheight=0.1)
+
+    def day_in_year_progress(self,):
+        # Create a progress variable
+        self.progress_var = tk.DoubleVar()
+        self.progress_var.set(0)
+        # Create a style for the progress bar
+        # self.style = ttk.Style()
+        # self.style.theme_use('default')
+        # self.style.configure("TProgressbar",
+        #                 thickness=30,  # You can adjust the thickness of the progress bar
+        #                 troughcolor="#ffc8dd",  # Background color
+        #                 troughrelief="flat",  # Relief style for the background
+        #                 troughborderwidth=2,  # Border width for the background
+        #                 barcolor="#a2d2ff",  # Foreground color
+        #                 barrelief="flat",  # Relief style for the foreground
+        #                 barborderwidth=5)  # Border width for the foreground
+        # Create a Progressbar widget
+        self.progress_bar = ttk.Progressbar(self.progress_frame, orient="horizontal", variable=self.progress_var, length=300, mode="determinate",
+            maximum=100,) # style='TProgressbar')
+
+        self.progress_bar.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
+        self.progress_bar.start()
+        
+        self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('calibri', 30, 'bold'), bg_color='#e6e6e6', text_color='black')
+        self.progress_num.place(relx=0.8, rely=0.15)
+        
+        self.progress_name = CTkLabel(self.progress_frame, text="Year", font=('calibri', 30, 'bold'))
+        self.progress_name.place(relx=0.46, rely=0.6)
+        
+        self.update_day_in_year_progress(self.progress_bar, self.progress_var, self.progress_num)
 
     def update_day_in_year_progress(self, progress_bar, progress_var, progress_num):
         # Get the current date
