@@ -24,11 +24,11 @@ class calender_win:
         self.calendar_frame.place(relx=0.05, rely=0.07, relwidth=0.4, relheight=0.4)
         
         # # Create the previous and next buttons
-        self.previous_button = CTkButton(self.calendar_frame, text="<<<", command=self.show_previous_month)
-        self.previous_button.place(relx=0.05, rely=0.05, relwidth=0.15, relheight=0.1)
+        self.previous_month_button = CTkButton(self.calendar_frame, text="<<<", command=self.show_previous_month)
+        self.previous_month_button.place(relx=0.05, rely=0.05, relwidth=0.15, relheight=0.1)
 
-        self.next_button = CTkButton(self.calendar_frame, text=">>>", command=self.show_next_month)
-        self.next_button.place(relx=0.8, rely=0.05, relwidth=0.15, relheight=0.1)
+        self.next_month_button = CTkButton(self.calendar_frame, text=">>>", command=self.show_next_month)
+        self.next_month_button.place(relx=0.8, rely=0.05, relwidth=0.15, relheight=0.1)
         
         self.show_calendar(self.year, self.month)
         
@@ -49,6 +49,12 @@ class calender_win:
         self.progress_frame.place(relx=0.2, rely=0.6, relwidth=0.6, relheight=0.2)
         
         self.day_in_month_progress()
+        
+        self.lower_progress_button = CTkButton(self.root, text="Back", command=None)
+        self.lower_progress_button.place(relx=0.13, rely=0.65, relwidth=0.06, relheight=0.07)
+
+        self.upper_progress_button = CTkButton(self.root, text="Next", command=None)
+        self.upper_progress_button.place(relx=0.81, rely=0.65, relwidth=0.06, relheight=0.07)
         
         
 
@@ -108,11 +114,11 @@ class calender_win:
         self.show_calendar(self.year, self.month)
         
         # # Create the previous and next buttons
-        self.previous_button = CTkButton(self.calendar_frame, text="<<<", command=self.show_previous_month)
-        self.previous_button.place(relx=0.05, rely=0.05, relwidth=0.15, relheight=0.1)
+        self.previous_month_button = CTkButton(self.calendar_frame, text="<<<", command=self.show_previous_month)
+        self.previous_month_button.place(relx=0.05, rely=0.05, relwidth=0.15, relheight=0.1)
 
-        self.next_button = CTkButton(self.calendar_frame, text=">>>", command=self.show_next_month)
-        self.next_button.place(relx=0.8, rely=0.05, relwidth=0.15, relheight=0.1)
+        self.next_month_button = CTkButton(self.calendar_frame, text=">>>", command=self.show_next_month)
+        self.next_month_button.place(relx=0.8, rely=0.05, relwidth=0.15, relheight=0.1)
 
     def show_next_month(self):
         # nonlocal year, month
@@ -128,11 +134,11 @@ class calender_win:
         self.show_calendar(self.year, self.month)
         
         # # Create the previous and next buttons
-        self.previous_button = CTkButton(self.calendar_frame, text="<<<", command=self.show_previous_month)
-        self.previous_button.place(relx=0.05, rely=0.05, relwidth=0.15, relheight=0.1)
+        self.previous_month_button = CTkButton(self.calendar_frame, text="<<<", command=self.show_previous_month)
+        self.previous_month_button.place(relx=0.05, rely=0.05, relwidth=0.15, relheight=0.1)
 
-        self.next_button = CTkButton(self.calendar_frame, text=">>>", command=self.show_next_month)
-        self.next_button.place(relx=0.8, rely=0.05, relwidth=0.15, relheight=0.1)
+        self.next_month_button = CTkButton(self.calendar_frame, text=">>>", command=self.show_next_month)
+        self.next_month_button.place(relx=0.8, rely=0.05, relwidth=0.15, relheight=0.1)
 
     def day_in_year_progress(self,):
         # Create a progress variable
