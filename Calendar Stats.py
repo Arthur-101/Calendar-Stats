@@ -48,7 +48,7 @@ class calender_win:
         self.progress_frame = CTkFrame(self.root, border_width=1, corner_radius=0, fg_color='#242424')
         self.progress_frame.place(relx=0.2, rely=0.6, relwidth=0.6, relheight=0.2)
         
-        self.day_in_year_progress()
+        self.day_in_month_progress()
         
         
 
@@ -156,10 +156,10 @@ class calender_win:
         self.progress_bar.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
         self.progress_bar.start()
         
-        self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('calibri', 30, 'bold'), bg_color='#e6e6e6', text_color='black')
-        self.progress_num.place(relx=0.8, rely=0.15)
+        self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
+        self.progress_num.place(relx=0.82, rely=0.55)
         
-        self.progress_name = CTkLabel(self.progress_frame, text="Year", font=('calibri', 30, 'bold'))
+        self.progress_name = CTkLabel(self.progress_frame, text="Year", font=('Fira COde', 30, 'bold'))
         self.progress_name.place(relx=0.46, rely=0.6)
         
         self.update_day_in_year_progress(self.progress_bar, self.progress_var, self.progress_num)
@@ -172,12 +172,12 @@ class calender_win:
         
         # Get the current year
         current_year = datetime.now().year
-        # Create a date object for the last day of the year
+        # Get the last day of the year
         last_day_of_year = datetime(current_year, 12, 31).date()
-        # Get the day of the year for the last day (which is also the total number of days in the year)
+        # Total number of days in the year
         total_days = last_day_of_year.timetuple().tm_yday
 
-        # Calculate the percentage of the year that has passed
+        # percentage of the year that has passed
         progress_percentage = (current_day / total_days) * 100
         # progress_percentage = 51.00
         
@@ -188,6 +188,53 @@ class calender_win:
             progress_var.set(var + 0.01)
             progress_num.configure(text = f"{progress_var.get():.2f} %")
             self.root.after(1, self.update_day_in_year_progress, progress_bar, progress_var, progress_num)
+
+        # Stop the progress bar when the progress reaches or exceeds 100%
+        if progress_var.get() >= progress_percentage:
+            progress_num.configure(text = f"{progress_percentage:.2f} %")
+            progress_bar.stop()
+
+    def day_in_month_progress(self):
+        # Create a progress variable
+        self.progress_var = tk.DoubleVar()
+        self.progress_var.set(0)
+        
+        # Create a Progressbar widget
+        self.progress_bar = ttk.Progressbar(self.progress_frame, orient="horizontal", variable=self.progress_var, length=300, mode="determinate",
+            maximum=100,) # style='TProgressbar')
+
+        self.progress_bar.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
+        self.progress_bar.start()
+        
+        self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
+        self.progress_num.place(relx=0.82, rely=0.55)
+        
+        self.progress_name = CTkLabel(self.progress_frame, text="Month", font=('Calibri', 30, 'bold'))
+        self.progress_name.place(relx=0.46, rely=0.6)
+        
+        self.update_day_in_month_progress(self.progress_bar, self.progress_var, self.progress_num)
+
+    def update_day_in_month_progress(self, progress_bar, progress_var, progress_num):
+        # Get the current date
+        current_date = datetime.now()
+        # Get the day of the month
+        current_day = current_date.timetuple().tm_mday
+        
+        # Get the last day of the month
+        last_day_of_month = calendar.monthrange(current_date.year, current_date.month)[1]
+        total_days = last_day_of_month
+
+        # percentage of the month that has passed
+        progress_percentage = (current_day / total_days) * 100
+        # progress_percentage = 51.00
+        
+        progress_bar['value'] = progress_percentage
+
+        var = progress_var.get()
+        if var < progress_percentage:
+            progress_var.set(var + 0.01)
+            progress_num.configure(text = f"{progress_var.get():.2f} %")
+            self.root.after(1, self.update_day_in_month_progress, progress_bar, progress_var, progress_num)
 
         # Stop the progress bar when the progress reaches or exceeds 100%
         if progress_var.get() >= progress_percentage:
