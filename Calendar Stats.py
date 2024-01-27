@@ -54,15 +54,7 @@ class calender_win:
         self.progress_var.set(0)
         # Create a style for the progress bar
         self.style = ttk.Style()
-        # self.style.theme_use('default')
-        # self.style.configure("TProgressbar",
-        #                 thickness=30,  # You can adjust the thickness of the progress bar
-        #                 troughcolor="#ffc8dd",  # Background color
-        #                 troughrelief="flat",  # Relief style for the background
-        #                 troughborderwidth=2,  # Border width for the background
-        #                 barcolor="#a2d2ff",  # Foreground color
-        #                 barrelief="flat",  # Relief style for the foreground
-        #                 barborderwidth=5)  # Border width for the foreground
+       
         # Create a Progressbar widget
         self.progress_bar = ttk.Progressbar(self.progress_frame, orient="horizontal", variable=self.progress_var, length=300, mode="determinate",
             maximum=100,) # style='TProgressbar')
