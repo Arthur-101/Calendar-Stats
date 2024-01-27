@@ -89,9 +89,6 @@ class calender_win:
         self.timelabel.after(1, self.update_daytime)  # Update every 1 milliseconds
     
     def show_calendar(self, year, month):
-        # Get the current year and month
-        # year = datetime.now().year
-        # month = datetime.now().month
         today = datetime.now().day
 
         # Create a calendar for the specified year and month
