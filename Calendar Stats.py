@@ -48,7 +48,7 @@ class calender_win:
         self.progress_frame = CTkFrame(self.root, border_width=1, corner_radius=0, fg_color='#242424')
         self.progress_frame.place(relx=0.2, rely=0.6, relwidth=0.6, relheight=0.2)
         
-        self.day_in_month_progress()
+        self.day_in_week_progress()
         
         self.lower_progress_button = CTkButton(self.root, text="Back", command=None)
         self.lower_progress_button.place(relx=0.13, rely=0.65, relwidth=0.06, relheight=0.07)
@@ -246,6 +246,52 @@ class calender_win:
         if progress_var.get() >= progress_percentage:
             progress_num.configure(text = f"{progress_percentage:.2f} %")
             progress_bar.stop()
+
+    def day_in_week_progress(self):
+        # Create a progress variable
+        self.progress_var = tk.DoubleVar()
+        self.progress_var.set(0)
+        
+        # Create a Progressbar widget
+        self.progress_bar = ttk.Progressbar(self.progress_frame, orient="horizontal", variable=self.progress_var, length=300, mode="determinate",
+            maximum=100,) # style='TProgressbar')
+
+        self.progress_bar.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
+        self.progress_bar.start()
+        
+        self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
+        self.progress_num.place(relx=0.82, rely=0.55)
+        
+        self.progress_name = CTkLabel(self.progress_frame, text="Week", font=('Calibri', 30, 'bold'))
+        self.progress_name.place(relx=0.46, rely=0.6)
+        
+        self.update_day_in_week_progress(self.progress_bar, self.progress_var, self.progress_num)
+
+    def update_day_in_week_progress(self, progress_bar, progress_var, progress_num):
+        # Get the current date
+        current_date = datetime.now()
+        # today's day number in the week (0 = Monday, 6 = Sunday)
+        week_day_number = current_date.weekday() + 1
+        
+        total_days = 7
+
+        # percentage of the month that has passed
+        progress_percentage = (week_day_number / total_days) * 100
+        # progress_percentage = 51.00
+        
+        progress_bar['value'] = progress_percentage
+
+        var = progress_var.get()
+        if var < progress_percentage:
+            progress_var.set(var + 0.01)
+            progress_num.configure(text = f"{progress_var.get():.2f} %")
+            self.root.after(1, self.update_day_in_week_progress, progress_bar, progress_var, progress_num)
+
+        # Stop the progress bar when the progress reaches or exceeds 100%
+        if progress_var.get() >= progress_percentage:
+            progress_num.configure(text = f"{progress_percentage:.2f} %")
+            progress_bar.stop()
+
 
 
 if __name__ == "__main__":
