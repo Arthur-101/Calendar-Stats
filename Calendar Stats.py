@@ -2,7 +2,6 @@ from customtkinter import *
 import tkinter as tk
 from tkinter import ttk
 import calendar
-# import datetime
 from datetime import datetime
 
 
@@ -41,14 +40,18 @@ class calender_win:
         self.am_pm_label = CTkLabel(self.time_frame, font=('calibri',120,'bold'))
         self.am_pm_label.place(relx=0.625,rely=0.01, )
         self.daylabel = CTkLabel(self.time_frame, font=('calibri', 30, 'bold'))
-        self.daylabel.place(relx=0.39, rely=0.45, )
+        self.daylabel.place(relx=0.345, rely=0.45, )
         
         self.update_daytime()
         
-        self.progress_frame = CTkFrame(self.root, border_width=1, corner_radius=0, fg_color='#242424')
-        self.progress_frame.place(relx=0.2, rely=0.6, relwidth=0.6, relheight=0.2)
         
-        self.day_in_week_progress()
+        ####  Progress Bar Frame  ####
+        self.progress_frame = CTkFrame(self.root, border_width=1, corner_radius=0, fg_color='#242424')
+        self.progress_frame.place(relx=0.19, rely=0.6, relwidth=0.62, relheight=0.2)
+        
+        self.day_in_year_progress()
+        # self.day_in_month_progress()
+        # self.day_in_week_progress()
         
         self.lower_progress_button = CTkButton(self.root, text="Back", command=None)
         self.lower_progress_button.place(relx=0.13, rely=0.65, relwidth=0.06, relheight=0.07)
@@ -144,26 +147,16 @@ class calender_win:
         # Create a progress variable
         self.progress_var = tk.DoubleVar()
         self.progress_var.set(0)
-        # Create a style for the progress bar
-        # self.style = ttk.Style()
-        # self.style.theme_use('default')
-        # self.style.configure("TProgressbar",
-        #                 thickness=30,  # You can adjust the thickness of the progress bar
-        #                 troughcolor="#ffc8dd",  # Background color
-        #                 troughrelief="flat",  # Relief style for the background
-        #                 troughborderwidth=2,  # Border width for the background
-        #                 barcolor="#a2d2ff",  # Foreground color
-        #                 barrelief="flat",  # Relief style for the foreground
-        #                 barborderwidth=5)  # Border width for the foreground
-        # Create a Progressbar widget
-        self.progress_bar = ttk.Progressbar(self.progress_frame, orient="horizontal", variable=self.progress_var, length=300, mode="determinate",
-            maximum=100,) # style='TProgressbar')
-
-        self.progress_bar.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
+        
+        # Create a Progressbar widget        
+        self.progress_bar = CTkProgressBar(self.progress_frame, orientation='horizontal',  variable=self.progress_var,
+            mode='determinate', corner_radius=1, border_width=2, )
+        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.84, relheight=0.4)
+        self.progress_bar.set(0)
         self.progress_bar.start()
         
         self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
-        self.progress_num.place(relx=0.82, rely=0.55)
+        self.progress_num.place(relx=0.865, rely=0.16)
         
         self.progress_name = CTkLabel(self.progress_frame, text="Year", font=('Fira COde', 30, 'bold'))
         self.progress_name.place(relx=0.46, rely=0.6)
@@ -186,17 +179,19 @@ class calender_win:
         # percentage of the year that has passed
         progress_percentage = (current_day / total_days) * 100
         # progress_percentage = 51.00
+        progress_value = progress_percentage/100
         
-        progress_bar['value'] = progress_percentage
+        # progress_bar['value'] = progress_percentage
+        progress_bar['value'] = progress_value
 
         var = progress_var.get()
-        if var < progress_percentage:
-            progress_var.set(var + 0.01)
-            progress_num.configure(text = f"{progress_var.get():.2f} %")
+        if var < progress_value:
+            progress_var.set(var + 0.001)
+            progress_num.configure(text = f"{progress_var.get()*100:.2f} %")
             self.root.after(1, self.update_day_in_year_progress, progress_bar, progress_var, progress_num)
 
         # Stop the progress bar when the progress reaches or exceeds 100%
-        if progress_var.get() >= progress_percentage:
+        if progress_var.get() >= progress_value:
             progress_num.configure(text = f"{progress_percentage:.2f} %")
             progress_bar.stop()
 
@@ -206,14 +201,14 @@ class calender_win:
         self.progress_var.set(0)
         
         # Create a Progressbar widget
-        self.progress_bar = ttk.Progressbar(self.progress_frame, orient="horizontal", variable=self.progress_var, length=300, mode="determinate",
-            maximum=100,) # style='TProgressbar')
-
-        self.progress_bar.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
+        self.progress_bar = CTkProgressBar(self.progress_frame, orientation='horizontal',  variable=self.progress_var,
+            mode='determinate', corner_radius=1, border_width=2, )
+        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.84, relheight=0.4)
+        self.progress_bar.set(0)
         self.progress_bar.start()
         
         self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
-        self.progress_num.place(relx=0.82, rely=0.55)
+        self.progress_num.place(relx=0.865, rely=0.16)
         
         self.progress_name = CTkLabel(self.progress_frame, text="Month", font=('Calibri', 30, 'bold'))
         self.progress_name.place(relx=0.46, rely=0.6)
@@ -232,18 +227,19 @@ class calender_win:
 
         # percentage of the month that has passed
         progress_percentage = (current_day / total_days) * 100
+        progress_value = progress_percentage/100
         # progress_percentage = 51.00
         
-        progress_bar['value'] = progress_percentage
+        progress_bar['value'] = progress_value
 
         var = progress_var.get()
-        if var < progress_percentage:
+        if var < progress_value:
             progress_var.set(var + 0.01)
-            progress_num.configure(text = f"{progress_var.get():.2f} %")
-            self.root.after(1, self.update_day_in_month_progress, progress_bar, progress_var, progress_num)
+            progress_num.configure(text = f"{progress_var.get()*100:.2f} %")
+            self.root.after(10, self.update_day_in_month_progress, progress_bar, progress_var, progress_num)
 
         # Stop the progress bar when the progress reaches or exceeds 100%
-        if progress_var.get() >= progress_percentage:
+        if progress_var.get() >= progress_value:
             progress_num.configure(text = f"{progress_percentage:.2f} %")
             progress_bar.stop()
 
@@ -253,14 +249,14 @@ class calender_win:
         self.progress_var.set(0)
         
         # Create a Progressbar widget
-        self.progress_bar = ttk.Progressbar(self.progress_frame, orient="horizontal", variable=self.progress_var, length=300, mode="determinate",
-            maximum=100,) # style='TProgressbar')
-
-        self.progress_bar.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
+        self.progress_bar = CTkProgressBar(self.progress_frame, orientation='horizontal',  variable=self.progress_var,
+            mode='determinate', corner_radius=1, border_width=2, )
+        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.84, relheight=0.4)
+        self.progress_bar.set(0)
         self.progress_bar.start()
         
         self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
-        self.progress_num.place(relx=0.82, rely=0.55)
+        self.progress_num.place(relx=0.865, rely=0.16)
         
         self.progress_name = CTkLabel(self.progress_frame, text="Week", font=('Calibri', 30, 'bold'))
         self.progress_name.place(relx=0.46, rely=0.6)
@@ -277,18 +273,19 @@ class calender_win:
 
         # percentage of the month that has passed
         progress_percentage = (week_day_number / total_days) * 100
+        progress_value = progress_percentage/100
         # progress_percentage = 51.00
         
-        progress_bar['value'] = progress_percentage
+        progress_bar['value'] = progress_value
 
         var = progress_var.get()
-        if var < progress_percentage:
-            progress_var.set(var + 0.01)
-            progress_num.configure(text = f"{progress_var.get():.2f} %")
+        if var < progress_value:
+            progress_var.set(var + 0.001)
+            progress_num.configure(text = f"{progress_var.get()*100:.2f} %")
             self.root.after(1, self.update_day_in_week_progress, progress_bar, progress_var, progress_num)
 
         # Stop the progress bar when the progress reaches or exceeds 100%
-        if progress_var.get() >= progress_percentage:
+        if progress_var.get() >= progress_value:
             progress_num.configure(text = f"{progress_percentage:.2f} %")
             progress_bar.stop()
 
