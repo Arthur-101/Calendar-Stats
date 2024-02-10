@@ -5,6 +5,6 @@
 
 ##### just for fun 
 
-<!--
-<img src="https://github.com/Arthur-101/Arthur-101/blob/main/Items/wave1.gif" width="30px">
--->
+
+<img src="https://github.com/Arthur-101/Calendar-Stats/blob/main/OutputImages/image1.png" width="800px">
+
