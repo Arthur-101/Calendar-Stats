@@ -6,5 +6,5 @@
 ##### just for fun 
 
 
-<img src="https://github.com/Arthur-101/Calendar-Stats/blob/main/OutputImages/image1.png" width="900px">
+<img src="https://github.com/Arthur-101/Calendar-Stats/blob/main/OutputImages/main win.png" width="900px">
 
