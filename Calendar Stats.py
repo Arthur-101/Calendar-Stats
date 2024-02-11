@@ -1,6 +1,5 @@
 from customtkinter import *
 import tkinter as tk
-from tkinter import ttk
 import calendar
 from datetime import datetime
 from CTkClock import AnalogClock
@@ -57,13 +56,13 @@ class calender_win:
 
         self.clock = AnalogClock(self.clock_frame, font_color='#dce4ee', font=('Calibri', 14, 'bold'),
                                  hour_color='#d4d4d4', minute_color='#cfcfcf',
-                                 border_width=6, )
+                                 border_width=6, quarter_hour=True, quarter_symbol='.',)
         self.clock.pack()
         
         
         ####  Progress Bar Frame  ####
         self.progress_frame = CTkFrame(self.main_frame, border_width=0, corner_radius=0, fg_color='#242424')
-        self.progress_frame.place(relx=0.21, rely=0.7, relwidth=0.62, relheight=0.2)
+        self.progress_frame.place(relx=0.21, rely=0.7, relwidth=0.55, relheight=0.2)
         
         self.progressbars_list = [self.day_in_week_progress, self.day_in_month_progress, self.day_in_year_progress,
                              self.year_in_decade_progress, self.year_in_century_progress]
@@ -78,7 +77,7 @@ class calender_win:
 
         self.upper_progress_button = CTkButton(self.main_frame, text="↑", font=('calibri', 30, 'bold'),
                 fg_color='#38b000', hover_color='#008000', command = self.change_progressbar_upper)
-        self.upper_progress_button.place(relx=0.84, rely=0.73, relwidth=0.06, relheight=0.07)
+        self.upper_progress_button.place(relx=0.82, rely=0.73, relwidth=0.06, relheight=0.07)
         
         
 
@@ -181,15 +180,15 @@ class calender_win:
         # Create a Progressbar widget
         self.progress_bar = CTkProgressBar(self.progress_frame, orientation='horizontal',  variable=self.progress_var,
             mode='determinate', corner_radius=1, border_width=3, border_color='#007200', progress_color='#38b000')
-        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.84, relheight=0.4)
+        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.4)
         self.progress_bar.set(0)
         self.progress_bar.start()
         
         self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
-        self.progress_num.place(relx=0.865, rely=0.16)
+        self.progress_num.place(relx=0.12, rely=0.6)
         
-        self.progress_name = CTkLabel(self.progress_frame, text="Week", font=('Fira Code', 30, 'bold'))
-        self.progress_name.place(relx=0.38, rely=0.6)
+        self.progress_name = CTkLabel(self.progress_frame, text="Days Passed this Week", font=('Fira Code', 30, 'bold'))
+        self.progress_name.place(relx=0.28, rely=0.58)
         
         self.update_day_in_week_progress(self.progress_bar, self.progress_var, self.progress_num)
 
@@ -228,15 +227,15 @@ class calender_win:
         # Create a Progressbar widget
         self.progress_bar = CTkProgressBar(self.progress_frame, orientation='horizontal',  variable=self.progress_var,
             mode='determinate', corner_radius=1, border_width=3, border_color='#007200', progress_color='#38b000')
-        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.84, relheight=0.4)
+        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.4)
         self.progress_bar.set(0)
         self.progress_bar.start()
         
         self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
-        self.progress_num.place(relx=0.865, rely=0.16)
+        self.progress_num.place(relx=0.12, rely=0.6)
         
-        self.progress_name = CTkLabel(self.progress_frame, text="Month", font=('Fira Code', 30, 'bold'))
-        self.progress_name.place(relx=0.38, rely=0.6)
+        self.progress_name = CTkLabel(self.progress_frame, text=f"Days Passed in {calendar.month_name[self.month]}", font=('Fira Code', 30, 'bold'))
+        self.progress_name.place(relx=0.28, rely=0.58)
         
         self.update_day_in_month_progress(self.progress_bar, self.progress_var, self.progress_num)
 
@@ -277,15 +276,15 @@ class calender_win:
         # Create a Progressbar widget        
         self.progress_bar = CTkProgressBar(self.progress_frame, orientation='horizontal',  variable=self.progress_var,
             mode='determinate', corner_radius=1, border_width=3, border_color='#007200', progress_color='#38b000')
-        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.84, relheight=0.4)
+        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.4)
         self.progress_bar.set(0)
         self.progress_bar.start()
         
         self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
-        self.progress_num.place(relx=0.865, rely=0.16)
+        self.progress_num.place(relx=0.12, rely=0.6)
         
-        self.progress_name = CTkLabel(self.progress_frame, text="Year", font=('Fira COde', 30, 'bold'))
-        self.progress_name.place(relx=0.38, rely=0.6)
+        self.progress_name = CTkLabel(self.progress_frame, text=f"Days Passed in {self.year}", font=('Fira COde', 30, 'bold'))
+        self.progress_name.place(relx=0.28, rely=0.58)
         
         self.update_day_in_year_progress(self.progress_bar, self.progress_var, self.progress_num)
 
@@ -329,15 +328,15 @@ class calender_win:
         # Create a Progressbar widget        
         self.progress_bar = CTkProgressBar(self.progress_frame, orientation='horizontal',  variable=self.progress_var,
             mode='determinate', corner_radius=1, border_width=3, border_color='#007200', progress_color='#38b000')
-        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.84, relheight=0.4)
+        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.4)
         self.progress_bar.set(0)
         self.progress_bar.start()
         
         self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
-        self.progress_num.place(relx=0.865, rely=0.16)
+        self.progress_num.place(relx=0.13, rely=0.6)
         
-        self.progress_name = CTkLabel(self.progress_frame, text="Decade", font=('Fira COde', 30, 'bold'))
-        self.progress_name.place(relx=0.38, rely=0.6)
+        self.progress_name = CTkLabel(self.progress_frame, text="Years Passed this Decade", font=('Fira COde', 30, 'bold'))
+        self.progress_name.place(relx=0.28, rely=0.58)
         
         self.update_year_in_decade_progress(self.progress_bar, self.progress_var, self.progress_num)
 
@@ -378,15 +377,15 @@ class calender_win:
         # Create a Progressbar widget        
         self.progress_bar = CTkProgressBar(self.progress_frame, orientation='horizontal',  variable=self.progress_var,
             mode='determinate', corner_radius=1, border_width=3, border_color='#007200', progress_color='#38b000')
-        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.84, relheight=0.4)
+        self.progress_bar.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.4)
         self.progress_bar.set(0)
         self.progress_bar.start()
         
         self.progress_num = CTkLabel(self.progress_frame, text="0 %", font=('Calibri', 30, 'bold'),)
-        self.progress_num.place(relx=0.865, rely=0.16)
+        self.progress_num.place(relx=0.13, rely=0.6)
         
-        self.progress_name = CTkLabel(self.progress_frame, text="Century", font=('Fira COde', 30, 'bold'))
-        self.progress_name.place(relx=0.38, rely=0.6)
+        self.progress_name = CTkLabel(self.progress_frame, text="Years Passed this Century", font=('Fira COde', 30, 'bold'))
+        self.progress_name.place(relx=0.28, rely=0.58)
         
         self.update_year_in_century_progress(self.progress_bar, self.progress_var, self.progress_num)
 
